@@ -1,0 +1,63 @@
+.bg-KXP {
+  background-image: linear-gradient(to bottom, #1e293b, #d91c1f, #0f172a);
+  width: 100vw;
+  background-size: cover;
+  padding-bottom: 100px;
+}
+.bg-CSK {
+  background-image: linear-gradient(to bottom, #f7db00, #fff);
+  width: 100vw;
+  background-size: cover;
+  padding-bottom: 100px;
+}
+.bg-SH {
+  background-image: linear-gradient(to bottom, #d91c1f, #f26d22);
+  width: 100vw;
+  background-size: cover;
+  padding-bottom: 100px;
+}
+
+.bg-DC {
+  background-image: linear-gradient(to bottom, #25bfbf, #13418b);
+  width: 100vw;
+  background-size: cover;
+  padding-bottom: 100px;
+}
+
+.bg-RR {
+  background-image: linear-gradient(to bottom, #4f5db0, #da237b);
+  width: 100vw;
+  background-size: cover;
+  padding-bottom: 100px;
+}
+
+.telugu {
+  width: 100vw;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.bg2 {
+  display: flex;
+  justify-content: space-around;
+  background-color: #0f172a;
+  margin: 25px;
+}
+.tlog {
+  height: 150px;
+  width: 120px;
+  justify-content: center;
+}
+.cont2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.he {
+  margin-left: 20px;
+}
+.cont3 {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
