@@ -31,6 +31,20 @@
   padding-bottom: 100px;
 }
 
+.bg-RCB {
+  background-image: linear-gradient(to bottom, #d91c1f, #13418b);
+  width: 100vw;
+  background-size: cover;
+  padding-bottom: 100px;
+}
+
+.bg-MI {
+  background-image: linear-gradient(to bottom, #4f5db0, #13418b);
+  width: 100vw;
+  background-size: cover;
+  padding-bottom: 100px;
+}
+
 .telugu {
   width: 100vw;
   padding: 20px;
@@ -42,6 +56,12 @@
   justify-content: space-around;
   background-color: #0f172a;
   margin: 25px;
+  flex-direction: column;
+}
+@media screen and (min-width: 767px) {
+  .bg2 {
+    flex-direction: row;
+  }
 }
 .tlog {
   height: 150px;
@@ -53,11 +73,42 @@
   flex-direction: column;
   justify-content: center;
 }
+
 .he {
   margin-left: 20px;
 }
-.cont3 {
+.cont1 {
   display: flex;
-  flex-direction: column;
-  text-align: right;
+  justify-content: space-around;
+  margin: 10px;
+}
+
+@media screen and (min-width: 767px) {
+  .hr-line {
+    display: none;
+  }
+}
+
+.hr-line {
+  width: 90vw;
+  border: 1px solid;
+}
+.cont3 {
+  text-align: left;
+}
+@media screen and (min-width: 767px) {
+  .cont3 {
+    text-align: right;
+    margin-left: 40px;
+  }
+}
+
+.ul-list {
+  display: flex;
+  background-color: none;
+  flex-wrap: wrap;
+}
+
+.loader {
+  text-align: center;
 }

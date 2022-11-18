@@ -1,6 +1,7 @@
+/* eslint-disable react/no-unknown-property */
 import {Component} from 'react'
 
-import {Loader} from 'react-loader-spinner'
+import Loader from 'react-loader-spinner'
 
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 
@@ -52,7 +53,7 @@ import './index.css'
 ]  */
 
 class Home extends Component {
-  state = {isLoad: true, teamsData: []}
+  state = {teamsData: [], isLoading: true}
 
   componentDidMount() {
     this.getTeamsData()
@@ -71,13 +72,24 @@ class Home extends Component {
     }))
     // console.log(newTeam)
 
-    this.setState({teamsData: newTeam, isLoad: false})
+    this.setState({teamsData: newTeam, isLoading: false})
+  }
+
+  renderTeam = () => {
+    const {teamsData} = this.state
+    return (
+      <ul className="listul">
+        {teamsData.map(each => (
+          <TeamCard key={each.id} teamData={each} />
+        ))}
+      </ul>
+    )
   }
 
   render() {
-    const {teamsData, isLoad} = this.state
+    const {isLoading} = this.state
     return (
-      <div className="bg-container" testid="loader">
+      <div className="bg-container">
         <div className="con1">
           <img
             src="https://assets.ccbp.in/frontend/react-js/ipl-logo-img.png"
@@ -86,12 +98,13 @@ class Home extends Component {
           />
           <h1 className="ipl-head">IPL Dashboard</h1>
         </div>
-
-        <ul className="listul">
-          {teamsData.map(each => (
-            <TeamCard key={each.id} teamData={each} />
-          ))}
-        </ul>
+        {isLoading ? (
+          <div testid="loader">
+            <Loader type="Oval" width={50} height={50} className="co-loader" />
+          </div>
+        ) : (
+          this.renderTeam()
+        )}
       </div>
     )
   }

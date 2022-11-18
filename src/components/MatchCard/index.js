@@ -1,13 +1,19 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unused-state */
 import {Component} from 'react'
 
+import Loader from 'react-loader-spinner'
+
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
+
 import LatestMatch from '../LatestMatch'
 
 import './index.css'
+import TeamMatches from '../TeamMatches'
 
 class MatchCard extends Component {
-  state = {imgUrl: '', latestList: {}, ids: ''}
+  state = {imgUrl: '', latestList: {}, ids: '', matchTeam: [], isLoad: true}
 
   componentDidMount() {
     this.getMatchDetails()
@@ -21,6 +27,7 @@ class MatchCard extends Component {
     const response = await fetch(`https://apis.ccbp.in/ipl/${id}`)
     const data = await response.json()
     const imgUrls = await data.team_banner_url
+    const teamsLists = await data.recent_matches
 
     const latestMatchDetails = {
       umpires: data.latest_match_details.umpires,
@@ -39,14 +46,38 @@ class MatchCard extends Component {
     // const recent = data.recent_matches
     //  console.log(data)
     //  console.log(imgUrls)
-    console.log(latestMatchDetails)
+    //  console.log(latestMatchDetails)
+    //  console.log(teamsLists)
 
-    this.setState({imgUrl: imgUrls, latestList: latestMatchDetails, ids: id})
+    const matchTeams = teamsLists.map(each => ({
+      competingTeam: each.competing_team,
+      competingTeamLogo: each.competing_team_logo,
+      matchStatus: each.match_status,
+      result: each.result,
+      id: each.id,
+    }))
+
+    console.log(matchTeams)
+
+    this.setState({
+      imgUrl: imgUrls,
+      latestList: latestMatchDetails,
+      ids: id,
+      matchTeam: matchTeams,
+      isLoad: false,
+    })
+  }
+
+  renderLatestMatch = async () => {
+    const {latestList} = this.state
+    return latestList.map(each => (
+      <LatestMatch key={each.id} latestMat={each} />
+    ))
   }
 
   render() {
     const {imgUrl, ids} = this.state
-    const {latestList} = this.state
+    const {latestList, matchTeam, isLoad} = this.state
     const {
       umpires,
       manOfTheMatch,
@@ -59,30 +90,52 @@ class MatchCard extends Component {
       result,
     } = latestList
     return (
-      <div className={`bg-${ids}`}>
-        <img src={imgUrl} alt="iplLogo" className="telugu" />
-        <h1 className="he">Latest Matches</h1>
-        <div className="bg2">
-          <div className="cont2">
-            <h2>{competingTeam}</h2>
-            <p>{date}</p>
-            <p>{venue}</p>
-            <p>{result}</p>
+      <div>
+        {isLoad ? (
+          <div testid="loader">
+            <Loader type="Oval" height={50} width={50} />
           </div>
-          <div className="cont2">
-            <img src={competingTeamLogo} alt={competingTeam} className="tlog" />
+        ) : (
+          <div className={`bg-${ids}`}>
+            <img src={imgUrl} alt="team banner" className="telugu" />
+            <p className="he">Latest Matches</p>
+
+            <div className="bg2">
+              <div className="cont1">
+                <div className="cont2">
+                  <p>{competingTeam}</p>
+                  <p>{date}</p>
+                  <p>{venue}</p>
+                  <p>{result}</p>
+                </div>
+                <div className="cont2">
+                  <img
+                    src={competingTeamLogo}
+                    alt={`latestmatch${competingTeam}`}
+                    className="tlog"
+                  />
+                </div>
+              </div>
+              <hr className="hr-line" />
+              <div className="cont3">
+                <p>First Innings</p>
+                <p>{firstInnings}</p>
+                <p>Second Innings</p>
+                <p>{secondInnings}</p>
+                <p>Man Of The Match</p>
+                <p>{manOfTheMatch}</p>
+                <p>Umpires</p>
+                <p>{umpires}</p>
+              </div>
+            </div>
+
+            <ul className="ul-list">
+              {matchTeam.map(each => (
+                <TeamMatches key={each.id} teamMat={each} />
+              ))}
+            </ul>
           </div>
-          <div className="cont3">
-            <h2>First Innings</h2>
-            <p>{firstInnings}</p>
-            <h2>Second Innings</h2>
-            <p>{secondInnings}</p>
-            <h2>Man Of The Match</h2>
-            <p>{manOfTheMatch}</p>
-            <h2>Umpires</h2>
-            <p>{umpires}</p>
-          </div>
-        </div>
+        )}
       </div>
     )
   }
